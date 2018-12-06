@@ -22,7 +22,7 @@
 
 
 int main() {
-    ALubyte recBuf[500000];    // буфер, в который пишется запись с микро
+    ALubyte* recBuf = new ALubyte[500000];    // буфер, в который пишется запись с микро
     ALubyte* recBufptr = recBuf;         // указатель на буфер, юзаем для места, куда пишем данные
     ALint smpRec;
     record(recBufptr, &smpRec);
@@ -30,4 +30,5 @@ int main() {
     if (debug) {
         replay(recBuf, smpRec);
     }
+    delete[] recBuf;
 }
