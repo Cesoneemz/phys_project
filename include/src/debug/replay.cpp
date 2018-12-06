@@ -25,7 +25,7 @@ int replay(ALubyte buffer[], ALuint samples) {
     }
     alcMakeContextCurrent(ctx);                         // выбор контекста
     alGenBuffers(1, &buf);                              // делаем буфер воспроизведения
-    alBufferData(buf, AL_FORMAT_MONO16, bufptr, samples, 8000);  // загружаем в него данные из буфера записи
+    alBufferData(buf, AL_FORMAT_MONO16, bufptr, samples*2, 44100);  // загружаем в него данные из буфера записи
     alGenSources(1, &src);                              // создаём источник звука
     alSourcei(src, AL_BUFFER, buf);                     // связываем его с буфером
     alSourcePlay(src);                                  // проигрываем содержимое буфера

@@ -2,7 +2,7 @@
 #define DEBUGGING_UTILS_H
 
 #endif // DEBUGGING_UTILS_H
-#include <AL/al.h>
+
 #ifdef WITH_DEBUG_UTILS
     #include "../src/debug/replay.cpp"
 #endif
