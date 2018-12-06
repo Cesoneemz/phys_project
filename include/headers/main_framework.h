@@ -1,0 +1,4 @@
+#ifndef MAIN_FRAMEWORK_H
+#define MAIN_FRAMEWORK_H
+
+#endif // MAIN_FRAMEWORK_H
