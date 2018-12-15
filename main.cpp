@@ -3,7 +3,8 @@
     #include <alc.h>
     #include <time.h>
     #include <iostream>
-    #include <Synchapi.h>
+    #include <chrono>
+	#include <thread>
 #elif __linux__            // здесь модули для линуха
     #include <AL/al.h>
     #include <AL/alc.h>
@@ -19,14 +20,14 @@
 #include "include/headers/debugging_utils.h"
 #include "include/headers/main_framework.h"
 
-void sleep(unsigned int time) {
+/*void sleep(unsigned int time) {
 #ifdef _WIN32
 	Sleep(time);
 #elif __linux__
 	usleep(time * 1000);
 #endif
 }
-
+*/
 
 int main() {
     ALubyte* recBuf = new ALubyte[500000];    // буфер, в который пишется запись с микро

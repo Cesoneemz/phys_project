@@ -2,7 +2,8 @@
     #include <al.h>
     #include <alc.h>
     #include <time.h>
-    #include <Synchapi.h>
+    #include <chrono>
+	#include <thread>
     #include <cstdio>
 #endif
 #ifdef __linux__            // здесь модули для линуха
@@ -13,14 +14,6 @@
     #include <cstdio>
 #endif
 
-void sleep(unsigned int time) {
-#ifdef _WIN32
-	Sleep(time);
-#endif
-#ifdef __linux__
-	usleep(time * 1000);
-#endif
-}
 
 int record(ALubyte *recBufptr, ALint *smpRecReturn) {                       // у функции на входе указатель на массив
     ALCdevice *recDev;          // устройство записи                        // также выводится количество сэмплов
@@ -34,7 +27,7 @@ int record(ALubyte *recBufptr, ALint *smpRecReturn) {                       // �
     }
     alcCaptureStart(recDev);                            // открытие устройства записи
     printf("Started recording!\n");
-    sleep(REC_TIME*1000);
+    std::this_thread::sleep_for(std::chrono::seconds(5));
     alcGetIntegerv(recDev, ALC_CAPTURE_SAMPLES, 1, &smpAvail);
     alcCaptureSamples(recDev, recBufptr, smpAvail);
     smpRec=smpAvail;
