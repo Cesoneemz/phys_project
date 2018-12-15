@@ -3,11 +3,10 @@
     #include <alc.h>
     #include <time.h>
     #include <iostream>
-    #include <unistd.h>
-#endif
-#ifdef __linux__            // здесь модули для линуха
-    #include <al.h>
-    #include <alc.h>
+    #include <Synchapi.h>
+#elif __linux__            // здесь модули для линуха
+    #include <AL/al.h>
+    #include <AL/alc.h>
     #include <time.h>
     #include <iostream>
     #include <unistd.h>
@@ -19,6 +18,14 @@
 #endif
 #include "include/headers/debugging_utils.h"
 #include "include/headers/main_framework.h"
+
+void sleep(unsigned int time) {
+#ifdef _WIN32
+	Sleep(time);
+#elif __linux__
+	usleep(time * 1000);
+#endif
+}
 
 
 int main() {

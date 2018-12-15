@@ -1,11 +1,21 @@
-#include <al.h>
-#include <alc.h>
-#include <cstdio>
-#include <unistd.h>
-
-//int main() {
-//    printf("lal");
-//}
+#ifdef _WIN32
+	#include <al.h>
+	#include <alc.h>
+	#include <cstdio>
+	#include <Synchapi.h>
+#elif __linux__
+	#include <AL/al.h>
+	#include <AL/alc.h>
+	#include <cstdio>
+	#include <unistd.h>
+#endif
+void sleep(unsigned int time) {
+#ifdef _WIN32
+	Sleep(time);
+#elif __linux__
+	usleep(time * 1000);
+#endif
+}
 
 int replay(ALubyte buffer[], ALuint samples) {
 	ALCdevice *mainDev;         // устройство воспроизведения
@@ -29,7 +39,7 @@ int replay(ALubyte buffer[], ALuint samples) {
     alGenSources(1, &src);                              // создаём источник звука
     alSourcei(src, AL_BUFFER, buf);                     // связываем его с буфером
     alSourcePlay(src);                                  // проигрываем содержимое буфера
-    usleep(5000000);                                    // ждём конца проигрывания
+    sleep(5000);                                    // ждём конца проигрывания
     alcCloseDevice(mainDev);                            // отпускаем устройство воспроизведения
     // тут нужно ещё почистить следы, поудалять буферы, отправить ссылки в ноль
     return 1;
