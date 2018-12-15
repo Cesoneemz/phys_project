@@ -6,8 +6,8 @@
     #include <unistd.h>
 #endif
 #ifdef __linux__            // здесь модули для линуха
-    #include <AL/al.h>
-    #include <AL/alc.h>
+    #include <al.h>
+    #include <alc.h>
     #include <time.h>
     #include <iostream>
     #include <unistd.h>
