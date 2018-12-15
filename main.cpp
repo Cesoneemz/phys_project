@@ -4,13 +4,13 @@
     #include <time.h>
     #include <iostream>
     #include <chrono>
-	#include <thread>
+    #include <thread>
 #elif __linux__            // здесь модули для линуха
     #include <AL/al.h>
     #include <AL/alc.h>
-    #include <time.h>
+    #include <chrono>
+    #include <thread>
     #include <iostream>
-    #include <unistd.h>
 #endif
 #ifdef WITH_DEBUG_UTILS
     #define debug 1
@@ -19,24 +19,17 @@
 #endif
 #include "include/headers/debugging_utils.h"
 #include "include/headers/main_framework.h"
-
-/*void sleep(unsigned int time) {
-#ifdef _WIN32
-	Sleep(time);
-#elif __linux__
-	usleep(time * 1000);
-#endif
-}
-*/
+#define REC_TIME 5
 
 int main() {
-    ALubyte* recBuf = new ALubyte[500000];    // буфер, в который пишется запись с микро
-    ALubyte* recBufptr = recBuf;         // указатель на буфер, юзаем для места, куда пишем данные
+    ALbyte* recBuf = new ALbyte[500000];    // буфер, в который пишется запись с микро
+    ALbyte* recBufptr = recBuf;         // указатель на буфер, юзаем для места, куда пишем данные
     ALint smpRec;
-    record(recBufptr, &smpRec);
+    //record(recBufptr, &smpRec, REC_TIME);
     ////////ДЕБАГ////////
     if (debug) {
-        replay(recBuf, smpRec);
+        //replay(recBuf, smpRec);
     }
+    recognise(recBuf);
     delete[] recBuf;
 }

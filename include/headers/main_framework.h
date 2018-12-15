@@ -3,5 +3,6 @@
 
 #endif // MAIN_FRAMEWORK_H
 
-int record(ALubyte *recBufptr, ALint *smpRecReturn);    // *recbufptr - указатель на массив, в который писать, *smpRecReturn - тут переменная, в которую пишется количество сэмплов
+int record(ALbyte *recBufptr, ALint *smpRecReturn, ALint rec_time);    // *recbufptr - указатель на массив, в который писать, *smpRecReturn - тут переменная, в которую пишется количество сэмплов
 // e.g. record(recBufptr, &smpRec);
+char recognise(signed char* sample);

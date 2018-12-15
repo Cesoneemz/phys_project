@@ -6,4 +6,4 @@
 #ifdef WITH_DEBUG_UTILS
     #include "../src/debug/replay.cpp"
 #endif
-int replay(ALubyte buffer[], ALuint samples);
+int replay(ALbyte buffer[], ALint samples);

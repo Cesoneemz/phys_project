@@ -8,15 +8,16 @@
 	#include <AL/al.h>
 	#include <AL/alc.h>
 	#include <cstdio>
-	#include <unistd.h>
+    #include <chrono>
+    #include <thread>
 #endif
 
-int replay(ALubyte buffer[], ALuint samples) {
+int replay(ALbyte buffer[], ALint samples) {
 	ALCdevice *mainDev;         // устройство воспроизведения
 	ALCcontext *ctx;            // контекст, хз что он делает, но без него не играет
 	ALuint buf;                 // буф проигрывания
 	ALuint src;                 // источник воспроизведения
-    ALubyte* bufptr = buffer;
+    ALbyte* bufptr = buffer;
 	mainDev = alcOpenDevice(nullptr);                   // получаем доступ к устройству воспроизведения
     if (mainDev == nullptr) {                           // чек на ошибки
         printf("Error!! \n");
