@@ -1,6 +1,6 @@
 #include <fstream>
 
-#define SAMPLE_DIRECTORY "include/src/samples/"
+#define SAMPLE_DIRECTORY "include/src/samples/"     // СДЕЛАТЬ ОТНОСИТЕЛЬНЫЙ ПУТЬ К ФАЙЛУ
 #define SAMPLE_A SAMPLE_DIRECTORY"A.raw"
 
 void loadSample(const char* filename, long *length);
@@ -12,13 +12,15 @@ static int* sample;
 
 char recognise(signed char* voice) {
     int* sample;
-    loadSample(SAMPLE_A, &length);
+    loadSample(SAMPLE_A, &length);          // СДЕЛАТЬ РАСПОЗНАВАНИЕ
+
+
     return 'a';
 }
 void loadSample(const char* filename, long *length) {
     read.open(filename, std::ifstream::binary);
     if (!read.is_open())
-        printf("Dura n rabotaet\n");
+        printf("Ne rabotaet\n");
     int file_length = 840;
     char* sample_internal = new char[file_length];
     read.read(sample_internal, file_length);

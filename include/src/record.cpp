@@ -13,8 +13,9 @@
     #include <cstdio>
 #endif
 
+static bool is_buffer1_available = 1, is_buffer2_available = 1; // нужно реализовать поочерёдную запись в два массива в зависимости от используемого в recognise (33-38)
 
-int record(ALbyte *recBufptr, ALint *smpRecReturn, ALint rec_time) {                       // у функции на входе указатель на массив
+int record(ALbyte *recBuf1ptr, ALbyte* recBuf2ptr, ALint *smpRecReturn, ALint rec_time) {                       // у функции на входе указатель на массив
     ALCdevice *recDev;          // устройство записи                        // также выводится количество сэмплов
     ALint smpAvail;             // кол-во сэмплов, снятых с микро
     //const ALint REC_TIME = 5;   // время записи
@@ -27,9 +28,14 @@ int record(ALbyte *recBufptr, ALint *smpRecReturn, ALint rec_time) {            
     printf("Started recording!\n");
     std::this_thread::sleep_for(std::chrono::seconds(rec_time));
     alcGetIntegerv(recDev, ALC_CAPTURE_SAMPLES, 1, &smpAvail);
-    alcCaptureSamples(recDev, recBufptr, smpAvail);
     printf("Stopped recording!\n");
     alcCaptureStop(recDev);                             // кончаем запись
+    while(!is_buffer1_available && !is_buffer2_available)
+        std::this_thread::yield();
+    if (is_buffer1_available)
+        alcCaptureSamples(recDev, recBuf1ptr, smpAvail);
+    else
+        alcCaptureSamples(recDev, recBuf2ptr, smpAvail);
     alcCaptureCloseDevice(recDev);                      // отпускаем устройство
     *smpRecReturn = smpAvail;
     return 1;
