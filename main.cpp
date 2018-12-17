@@ -20,18 +20,16 @@
 
 
 int main() {
-    ALbyte** recBuf = new ALbyte*[2];
-    recBuf[0] = new ALbyte[500000];    // буфер, в который пишется запись с микро
-    recBuf[1] = new ALbyte[500000];
+    ALint* recBuf = new ALbyte[500000];    // буфер, в который пишется запись с микро
     ALint smpRec;
     //printf("%p\n%p\n", recBuf[0], recBuf[1]);
-    std::thread recording(record, recBuf[0], recBuf[1], &smpRec, REC_TIME);
-    std::thread recognition(recognise, recBuf[0]);
+    std::thread recording(record, recBuf, &smpRec, REC_TIME);
+    std::thread recognition(recognise, recBuf, &smpRec);
     ////////ДЕБАГ////////
     /*if (debug) {
         replay(recBufptr, smpRec[0]);
     }*/
     recognition.join();
     recording.join();
-    delete[] recBuf[0], recBuf[1], recBuf;
+    delete[] recBuf;
 }

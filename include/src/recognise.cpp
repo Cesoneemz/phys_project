@@ -1,33 +1,38 @@
 #include <fstream>
-
-#define SAMPLE_DIRECTORY "include/src/samples/"     // СДЕЛАТЬ ОТНОСИТЕЛЬНЫЙ ПУТЬ К ФАЙЛУ
-#define SAMPLE_A SAMPLE_DIRECTORY"A.raw"
+#include "../headers/samples.h"
 
 void loadSample(const char* filename, long *length);
-void determineVolume(unsigned char* voice_sample, int* loudest, int* quietest);
+void determineVolume(signed char* voice_sample, int* loudest, int* quietest);
 
 static std::ifstream read;
 static long length;
-static int* sample;
+static short int** samples = new short int*[SAMPLES_COUNT];
+samples[0] = new short int[SAMPLE_A_LENGTH/2];
 
-char recognise(signed char* voice) {
-    int* sample;
-    loadSample(SAMPLE_A, &length);          // СДЕЛАТЬ РАСПОЗНАВАНИЕ
+char recognise(signed char* voice, int* smpRec) {
+	int* sample;
+	loadSample(SAMPLE_A, &length);          // СДЕЛАТЬ РАСПОЗНАВАНИЕ
 
 
-    return 'a';
+	return 'a';
 }
-void loadSample(const char* filename, long *length) {
-    read.open(filename, std::ifstream::binary);
-    if (!read.is_open())
-        printf("Ne rabotaet\n");
-    int file_length = 840;
-    char* sample_internal = new char[file_length];
-    read.read(sample_internal, file_length);
-    sample = new int[file_length/2];
-    int* sampleptr = sample;
-    for (int i = 0; i < file_length; i+=2) {
-        *sampleptr = reinterpret_cast<int>(sample_internal[i]+sample_internal[i+1]);
-        sampleptr++;
-    }
+void loadSamples() {
+	
+	char* filenames[SAMPLES_COUNT] { SAMPLE_A };
+	int filesizes[SAMPLES_COUNT] { SAMPLE_A_LENGTH };
+	char* internal_sample;
+	for (int i = 0; i < SAMPLES_COUNT; i++) {
+	    read.open(filenames[i], std::ifstream::binary);
+		if (!read.is_open()) {
+	        	printf("Error opening file %s\n", filenames[i];
+			return -1;
+		}
+		internal_sample = new char[filesizes[i]];
+		read.read(internal_sample, filesizes[i]);
+		short int* samplePtr = samples[i];
+		for (int k = 0; k < filesizes[i]; k+=2) {
+			*samplePtr = reinterpret_cast<short int>(internal_sample[k] + internal_sample[k+1]);
+			samplePtr += sizeof(short int);
+		}
+	}
 }
