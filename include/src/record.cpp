@@ -13,7 +13,7 @@
     #include <cstdio>
 #endif
 
-int record(ALbyte *recBufptr, ALint *smpRecReturn, ALint rec_time) {                       // у функции на входе указатель на массив
+int record(ALint *recBufptr, ALint *smpRecReturn, ALint rec_time) {                       // у функции на входе указатель на массив
     ALCdevice *recDev;          // устройство записи                        // также выводится количество сэмплов
     ALint smpAvail;             // кол-во сэмплов, снятых с микро
     //const ALint REC_TIME = 5;   // время записи
