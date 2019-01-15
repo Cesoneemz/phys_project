@@ -7,3 +7,5 @@
     #include "../src/debug/replay.cpp"
 #endif
 int replay(ALbyte buffer[], ALint samples);
+void determineVolume(signed char* voice_sample, int* loudest, int* quietest);
+
